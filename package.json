@@ -4,7 +4,7 @@
   "description": "Node tutorial.",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start": "nodemon server.js",
     "start:prod": "NODE_ENV=PRODUCTION nodemon server.js"
   },
   "author": "Sachin Naik",
@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "mongoose": "^5.13.15",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
@@ -24,5 +25,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "prettier": "^2.7.1"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }

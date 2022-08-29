@@ -1,5 +1,5 @@
 const express = require('express');
-const userControllers = require('./../controllers/userControllers')
+const userControllers = require('../controllers/userControllers');
 
 // const getAllUsers = (req,res) =>{
 //     res.status(500).json({
@@ -39,14 +39,14 @@ const userControllers = require('./../controllers/userControllers')
 const router = express.Router();
 
 router
-    .route('/')
-    .get(userControllers.getAllUsers)
-    .post(userControllers.createUser);
+  .route('/')
+  .get(userControllers.getAllUsers)
+  .post(userControllers.createUser);
 
 router
-    .route('/:id')
-    .get(userControllers.getUser)
-    .patch(userControllers.updateUser)
-    .delete(userControllers.deleteUser);
+  .route('/:id')
+  .get(userControllers.getUser)
+  .patch(userControllers.updateUser)
+  .delete(userControllers.deleteUser);
 
 module.exports = router;

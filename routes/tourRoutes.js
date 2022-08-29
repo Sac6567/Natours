@@ -1,6 +1,12 @@
 const express = require('express');
-const {getAllTours, createTour, getTour, updateTour, deleteTour, checkID, checkBody} 
-    = require('./../controllers/tourControllers');
+// const {
+//   getAllTours,
+//   createTour,
+//   getTour,
+//   updateTour,
+//   deleteTour /*,checkID, checkBody*/,
+// } = require('../controllers/tourControllers');
+const tourControllers = require('../controllers/tourControllers');
 
 // const tours = JSON.parse(
 //     fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
@@ -28,10 +34,9 @@ const {getAllTours, createTour, getTour, updateTour, deleteTour, checkID, checkB
 //     if(!tour) {
 //         return res.status(404).json({
 //             status: 'fail',
-//             message: 'invalid ID'  
+//             message: 'invalid ID'
 //         });
 //     }
-    
 
 //     res.status(200).json({
 //         status:'success',
@@ -50,8 +55,8 @@ const {getAllTours, createTour, getTour, updateTour, deleteTour, checkID, checkB
 //     tours.push(newTour);
 
 //     fs.writeFile(
-//         `${__dirname}/dev-data/data/tours-simple.json`, 
-//         JSON.stringify(tours), 
+//         `${__dirname}/dev-data/data/tours-simple.json`,
+//         JSON.stringify(tours),
 //         err =>{
 //         res.status(201).json({
 //             status: 'success',
@@ -70,7 +75,7 @@ const {getAllTours, createTour, getTour, updateTour, deleteTour, checkID, checkB
 //     if(id > tours.length)  {
 //         return res.status(404).json({
 //             status: 'fail',
-//             message: 'invalid ID'  
+//             message: 'invalid ID'
 //         });
 //     }
 
@@ -88,7 +93,7 @@ const {getAllTours, createTour, getTour, updateTour, deleteTour, checkID, checkB
 //     if(id > tours.length)  {
 //         return res.status(404).json({
 //             status: 'fail',
-//             message: 'invalid ID'  
+//             message: 'invalid ID'
 //         });
 //     }
 
@@ -100,17 +105,17 @@ const {getAllTours, createTour, getTour, updateTour, deleteTour, checkID, checkB
 
 const router = express.Router();
 
-router.param('id', checkID);
+// router.param('id', checkID);
 
 router
-    .route('/')
-    .get(getAllTours)
-    .post(checkBody, createTour);
+  .route('/')
+  .get(tourControllers.getAllTours)
+  .post(tourControllers.createTour);
 
 router
-    .route('/:id')
-    .get(getTour)
-    .patch(updateTour)
-    .delete(deleteTour);
+  .route('/:id')
+  .get(tourControllers.getTour)
+  .patch(tourControllers.updateTour)
+  .delete(tourControllers.deleteTour);
 
-module.exports = router; 
+module.exports = router;
