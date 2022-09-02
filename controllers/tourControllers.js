@@ -56,10 +56,21 @@ exports.getAllTours = async (req, res) => {
 
     /*Field limiting */
     if (req.query.fields) {
-      const fields = req.quer.fields.split(',').join(' ');
+      const fields = req.query.fields.split(',').join(' ');
       query = query.select(fields);
     } else {
       query = query.select('-__v');
+    }
+
+    /*pagination*/
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 100;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(10);
+
+    if (req.query.page) {
+      const numTours = await Tour.countDocuments();
+      if (skip >= numTours) throw new Error('This page doesnot exhist');
     }
 
     /*Execute query */
