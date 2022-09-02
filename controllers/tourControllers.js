@@ -51,7 +51,15 @@ exports.getAllTours = async (req, res) => {
       query = query.sort(sortBy);
       // sort('price ratingsAverage')
     } else {
-      quer = query.sort('-createdAt');
+      query = query.sort('-createdAt');
+    }
+
+    /*Field limiting */
+    if (req.query.fields) {
+      const fields = req.quer.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      query = query.select('-__v');
     }
 
     /*Execute query */
