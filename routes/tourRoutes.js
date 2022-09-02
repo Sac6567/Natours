@@ -1,12 +1,12 @@
 const express = require('express');
-// const {
-//   getAllTours,
-//   createTour,
-//   getTour,
-//   updateTour,
-//   deleteTour /*,checkID, checkBody*/,
-// } = require('../controllers/tourControllers');
-const tourControllers = require('../controllers/tourControllers');
+const {
+  getAllTours,
+  createTour,
+  getTour,
+  updateTour,
+  deleteTour /*,checkID, checkBody*/,
+  aliasTopTours,
+} = require('../controllers/tourControllers');
 
 // const tours = JSON.parse(
 //     fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
@@ -107,15 +107,10 @@ const router = express.Router();
 
 // router.param('id', checkID);
 
-router
-  .route('/')
-  .get(tourControllers.getAllTours)
-  .post(tourControllers.createTour);
+router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 
-router
-  .route('/:id')
-  .get(tourControllers.getTour)
-  .patch(tourControllers.updateTour)
-  .delete(tourControllers.deleteTour);
+router.route('/').get(getAllTours).post(createTour);
+
+router.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
 module.exports = router;
