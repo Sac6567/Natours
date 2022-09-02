@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 
 dotenv.config({ path: './config.env' });
 
-const app = require('./app');
-
 const DB = require('./z').z;
+const app = require('./app');
 
 mongoose
   .connect(DB, {
@@ -36,8 +35,8 @@ mongoose
 //     console.log('Error 💥', err);
 //   });
 
-const port = /*process.env.PORT ||*/ 3000;
-app.listen(() => {
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
   console.log(`App running on port: ${port}...`);
 });
 

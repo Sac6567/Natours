@@ -28,16 +28,48 @@ const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    // console.log(req.query, queryObj);
+    /*build query */
+    //filtering
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
 
-    //   console.log(req.requestTime);
+    // adv filter
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`); // Regular expression
 
+    //{ difficulty: 'easy', duration: { $gte: 5 } }
+    //{ difficulty: 'easy', duration: { gte: '5' } }
+    // gte, gt, lte, lt
+
+    let query = Tour.find(JSON.parse(queryStr));
+
+    /*Sorting*/
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+      // sort('price ratingsAverage')
+    } else {
+      quer = query.sort('-createdAt');
+    }
+
+    /*Execute query */
+    const tours = await query;
+
+    // const query = await Tour.find()
+    //   .wher('duration')
+    //   .equals(5)
+    //   .where('difficulty')
+    //   .equals('easy');
+
+    /*send response */
     res.status(200).json({
       status: 'success',
       // requestedAt: req.requestTime,
       results: tours.length,
       data: {
-        tours: tours,
+        tours,
       },
     });
   } catch (err) {
